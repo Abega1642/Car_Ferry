@@ -1,14 +1,17 @@
 package dev.razafindratelo.exo9.Ferry;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import java.time.LocalDate;
+
+@Getter
+@Setter
+
 public class Driver extends Traveler {
     private String driverLicenceId;
+
+    public Driver(String driverLicenceId, String firstName, String lastname, LocalDate birthday, String addr, double weight, LocalDate travelDate) {
+        super(firstName, lastname, birthday, addr, weight, travelDate);
+        this.driverLicenceId = driverLicenceId;
+    }
 }

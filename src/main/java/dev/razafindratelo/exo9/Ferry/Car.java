@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class Car extends Vehicle {
     private int maxPassengers;
-    private List<Person> passengers;
+    private List<Traveler> passengers;
 
     public Car() {
         super();
@@ -17,31 +17,30 @@ public class Car extends Vehicle {
         this.passengers = new ArrayList<>();
     }
 
-    public Car(int maxPassengers, List<Person> passengers) {
+    public Car(int maxPassengers) {
         super();
         this.maxPassengers = maxPassengers;
-        if (passengers.size() > this.maxPassengers) {
-            throw new RuntimeException("Number of passengers exceeds maximum number of passengers");
+    }
+
+    public void addAPassenger(Traveler person) {
+        if (passengers.size() + 1 > this.maxPassengers) {
+            throw new RuntimeException("Number of passengers exceeds the maximum number of passengers");
         } else {
-            this.passengers = passengers;
+            this.passengers.add(person);
         }
     }
 
-    public void addAPassenger(Person person) {
-        List<Person> passengerList = this.passengers;
-        passengerList.add(person);
-        if (passengerList.size() > this.maxPassengers) {
-            throw new RuntimeException("Number of passengers exceeds the maximum number of passengers");
-        } else {
-            this.passengers = passengerList;
-        }
-    }
-    public void removeAPassenger(Person person) {
-        if (this.passengers.size()  - 1 < 0) {
+    public void removeAPassenger(Traveler person) {
+        if (this.passengers.isEmpty()) {
             throw new RuntimeException("There are no more passengers");
         } else {
             this.passengers.remove(person);
         }
+    }
+    @Override
+    public double getWeight(){
+        double passengerWeight = this.passengers.stream().map(Traveler::getWeight).reduce(0d, Double::sum);
+        return super.getWeight() + passengerWeight;
     }
 
 }

@@ -15,16 +15,6 @@ import java.util.stream.Collectors;
 public class Truck extends Vehicle {
     private List<Colis> colisList;
 
-    public Truck() {
-        super();
-        this.colisList = new ArrayList<>();
-    }
-
-    public Truck (String model, String matriculationId, double travelledDistance, double initialWeight, double length, double gasVolume, Driver driver) {
-        super(model, matriculationId, travelledDistance, initialWeight, length, gasVolume, driver);
-        this.colisList = new ArrayList<>();
-    }
-
     public Truck (String model, String matriculationId, double gasVolume, double initialWeight, double length) {
         super(model, matriculationId, initialWeight, length, gasVolume);
         this.colisList = new ArrayList<>();
@@ -34,7 +24,12 @@ public class Truck extends Vehicle {
         this.colisList.add(colis);
     }
 
-    public List<Colis> retrievColis(Colis colis) {
-        return this.colisList.stream().filter(col -> col.id() != colis.id()).collect(Collectors.toList());
+    public void retrievColis(Colis colis) {
+        this.colisList = this.colisList.stream().filter(col -> col.id() != colis.id()).collect(Collectors.toList());
+    }
+    @Override
+    public double getWeight(){
+        double colisWeight = this.colisList.stream().map(Colis::weight).reduce(0d, Double::sum);
+        return super.getWeight() + colisWeight;
     }
 }

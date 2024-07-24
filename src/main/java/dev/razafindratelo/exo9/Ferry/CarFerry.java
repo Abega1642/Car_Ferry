@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
+
 public class CarFerry extends Vehicle {
     private List<Vehicle> vehiclesList;
 
@@ -28,8 +29,8 @@ public class CarFerry extends Vehicle {
         for (Vehicle vehicle : this.vehiclesList) {
             travelers.add(vehicle.getDriver());
             if (vehicle instanceof Car car) {
-                List<Person> test = car.getPassengers();
-                travelers.addAll(test);
+                List<Traveler> passengers = car.getPassengers();
+                travelers.addAll(passengers);
             }
         }
         return travelers.contains(person);
